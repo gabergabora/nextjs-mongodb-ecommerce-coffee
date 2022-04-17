@@ -1,0 +1,27 @@
+{
+  "name": "nextjs-mongodb-shop",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
+    "axios": "^0.26.1",
+    "js-cookie": "^3.0.1",
+    "mongoose": "^6.3.0",
+    "next": "12.1.5",
+    "next-connect": "^0.12.2",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
+    "react-redux": "^8.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.4",
+    "postcss": "^8.4.12",
+    "tailwindcss": "^3.0.24"
+  }
+}
