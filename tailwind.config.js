@@ -4,7 +4,12 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        pacifico: "Pacifico",
+      },
+      backgroundImage: { "banner": "url(/images/banner.jpg)" },
+    },
   },
   plugins: [],
-}
+};
