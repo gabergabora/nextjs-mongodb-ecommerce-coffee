@@ -1,3 +1,20 @@
-export default function Home() {
-  return <div className='ml-32 text-4xl font-bold text-red-500 '>home</div>;
+import axios from "axios";
+import { AboutUs, Banner, BlogList, Layout, ProductList } from "components";
+
+export default function Home({ products }) {
+  return (
+    <Layout title='Coffee' description='fresh coffee in the morning'>
+      <Banner />
+      <AboutUs />
+      <ProductList products={products} />
+      <BlogList />
+    </Layout>
+  );
+}
+
+export async function getServerSideProps() {
+  const res = await axios.get(process.env.BASE_URL + "/api/products");
+  return {
+    props: { products: res.data },
+  };
 }
