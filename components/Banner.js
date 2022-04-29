@@ -10,7 +10,7 @@ export default function Banner() {
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus
             quaerat temporibus, eligendi at repellendus nobis.
           </p>
-          <Link href='/'>
+          <Link href='/shop'>
             <a className='link-btn'>Products</a>
           </Link>
         </div>

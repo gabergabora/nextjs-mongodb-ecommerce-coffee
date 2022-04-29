@@ -5,6 +5,13 @@ const initialState = {
   cartItems: Cookies.get("cartItems")
     ? JSON.parse(Cookies.get("cartItems"))
     : [],
+
+  shippingAddress: Cookies.get("shippingAddress")
+    ? JSON.parse(Cookies.get("shippingAddress"))
+    : {},
+  paymentMethod: Cookies.get("paymentMethod")
+    ? JSON.parse(Cookies.get("paymentMethod"))
+    : "",
 };
 
 const cartSlice = createSlice({
@@ -35,9 +42,23 @@ const cartSlice = createSlice({
       state.cartItems = [];
       Cookies.remove("cartItems");
     },
+    paymentMethod: (state, action) => {
+      state.paymentMethod = action.payload;
+      Cookies.set("paymentMethod", JSON.stringify(action.payload));
+    },
+    saveShippingAddress: (state, action) => {
+      state.shippingAddress = action.payload;
+      Cookies.set("shippingAddress", JSON.stringify(action.payload));
+    },
   },
 });
 
-export const { addToCart, removeFromCart,clearCart } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  clearCart,
+  paymentMethod,
+  saveShippingAddress,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

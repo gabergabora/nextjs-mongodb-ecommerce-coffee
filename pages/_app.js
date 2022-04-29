@@ -1,8 +1,12 @@
-//? store
 import { useEffect, useState } from "react";
+
+//? toast
 import { Toaster } from "react-hot-toast";
+
+//? store
 import { Provider } from "react-redux";
 import { store } from "store/store";
+
 //? styles
 import "/styles/global.css";
 

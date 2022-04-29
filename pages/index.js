@@ -1,4 +1,6 @@
 import axios from "axios";
+
+//? components
 import { AboutUs, Banner, BlogList, Layout, ProductList } from "components";
 
 export default function Home({ products }) {

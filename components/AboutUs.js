@@ -7,7 +7,7 @@ export default function AboutUs() {
         <h2 className='mb-8 text-center'>
           <span className='text-amber-700'>About</span> Us
         </h2>
-        <article className='grid gap-4 lg:gap-1 lg:grid-cols-2 bg-zinc-900 rounded '>
+        <article className='grid gap-4 rounded lg:gap-1 lg:grid-cols-2 bg-zinc-900 '>
           <div className='relative h-80 lg:h-full'>
             <Image
               src={"/images/about-img.jpeg"}

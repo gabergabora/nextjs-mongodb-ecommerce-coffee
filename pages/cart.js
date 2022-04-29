@@ -1,18 +1,14 @@
 import dynamic from "next/dynamic";
-import Image from "next/image";
-import {useRouter} from "next/router";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 //? components
-import { Layout } from "components";
+import { Layout, CartTable } from "components";
 
 //? store
-import { useSelector, useDispatch } from "react-redux";
-
-//? icons
-import { BsFillTrashFill } from "react-icons/bs";
-import { removeFromCart } from "store/slices/cartSlice";
+import { useSelector } from "react-redux";
 
 function Cart() {
-  const dispatch = useDispatch();
   const router = useRouter();
 
   //? store
@@ -26,61 +22,47 @@ function Cart() {
   return (
     <Layout title='shopping cart'>
       <section>
-        <div className='section-container text-white'>
-          <h1 className='text-2xl mb-8'>Shopping Cart</h1>
-          <div className=' grid grid-cols-1 lg:grid-cols-3 gap-4'>
-            <div className=' lg:col-span-2 col'>
-              <table className='grid'>
-                <thead className=''>
-                  <tr className='text-amber-400 grid grid-cols-5 capitalize'>
-                    <th>image</th>
-                    <th>name</th>
-                    <th>quantity</th>
-                    <th>price</th>
-                    <th>action</th>
-                  </tr>
-                </thead>
-                <tbody className='  space-y-5 py-3 '>
-                  {cartItems.map((item) => (
-                    <tr
-                      key={item._id}
-                      className='grid grid-cols-5 items-center text-center bg-zinc-900 p-2'
-                    >
-                      <td className='relative h-16 w-14 mx-auto '>
-                        <Image src={item.image} layout='fill' />
-                      </td>
-                      <td>{item.name}</td>
-                      <td>{item.quantity}</td>
-                      <td>{item.price}</td>
-                      <td>
-                        <button
-                          type='button'
-                          className='p-1 text-gray-300 hover:text-red-600 transition-colors'
-                          onClick={() => dispatch(removeFromCart(item._id))}
-                        >
-                          <BsFillTrashFill className='mx-auto h-7 w-7   ' />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        <div className='text-white section-container'>
+          <h1 className='mb-8 text-2xl'>Shopping Cart</h1>
+          {cartItems.length > 0 ? (
+            <div className='grid grid-cols-1 gap-4 lg:grid-cols-3'>
+              <div className=' lg:col-span-2 col'>
+                <CartTable cart cartItems={cartItems} />
+              </div>
+              <div className='p-6 lg:col-span-1 h-52 bg-zinc-900 mt-9 lg:sticky lg:top-20 '>
+                <p>
+                  <span className='pr-4 text-xl text-amber-400'>
+                    Total Items:{" "}
+                  </span>
+                  {cartItems.reduce((a, c) => a + c.quantity, 0)}
+                </p>
+                <p>
+                  <span className='pr-4 text-xl text-amber-400'>
+                    Total Price:{" "}
+                  </span>
+                  ${cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
+                </p>
+
+                <br />
+                <button
+                  type='button'
+                  className='w-full link-btn'
+                  onClick={checkoutHandler}
+                >
+                  Checkout
+                </button>
+              </div>
             </div>
-            <div className='lg:col-span-1 h-60 bg-zinc-900  mt-9 lg:sticky lg:top-12 p-6 text-center'>
-              <p>
-                Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)} items)
-                : ${cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
+          ) : (
+            <div className='p-4 space-y-16 text-center bg-zinc-900 '>
+              <p className='text-4xl font-pacifico text-amber-500'>
+                your Cart is empty
               </p>
-              <br />
-              <button
-                type='button'
-                className='link-btn w-full'
-                onClick={checkoutHandler}
-              >
-                Checkout
-              </button>
+              <Link href='/'>
+                <a className='link-btn'>Go To Shop</a>
+              </Link>
             </div>
-          </div>
+          )}
         </div>
       </section>
     </Layout>

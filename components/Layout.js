@@ -1,7 +1,7 @@
-import Head from 'next/head';
+import Head from "next/head";
 import { Navbar, Footer } from "components";
 
-export default function Layout({ children,title,description }) {
+export default function Layout({ children, title, description }) {
   return (
     <>
       <Head>
@@ -9,7 +9,7 @@ export default function Layout({ children,title,description }) {
         {description && <meta name='description' content={description}></meta>}
       </Head>
       <Navbar />
-      <main className='bg-black/95 min-h-[82vh]'>{children}</main>
+      <main className='bg-black/95 min-h-[62vh]'>{children}</main>
       <Footer />
     </>
   );

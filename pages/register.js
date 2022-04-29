@@ -1,30 +1,41 @@
 import Link from "next/link";
-import axios from "axios";
-import { Layout } from "components";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+
 import { useEffect } from "react";
+
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+
+//? components
+import { Layout } from "components";
+
+//? store
+import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "store/slices/userSlice";
 
 export default function Register() {
   const router = useRouter();
   const { redirect } = router.query;
-  const dispatch=useDispatch();
 
+
+  //? store
+  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
 
+  //? form hook
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
 
+  //? hanle routin
   useEffect(() => {
     if (userInfo) router.push("/");
   }, []);
 
+  //? handlers
   const submitHandler = async ({ name, email, password, confirmPassword }) => {
     if (password !== confirmPassword) {
       toast.error("Passwords don't match");
@@ -38,8 +49,8 @@ export default function Register() {
           email,
           password,
         });
-        dispatch(userLogin(data))
-        toast.success('Your Register Successfully');
+        dispatch(userLogin(data));
+        toast.success("Your Register Successfully");
 
         router.push(redirect || "/");
       } catch (error) {
@@ -55,7 +66,7 @@ export default function Register() {
           <h1 className='mb-8 '>Register</h1>
           <form
             onSubmit={handleSubmit(submitHandler)}
-            className='bg-zinc-900 space-y-6 px-4 py-8 max-w-xl text-center mx-auto rounded '
+            className='max-w-xl px-4 py-8 mx-auto space-y-6 text-center rounded bg-zinc-900 '
           >
             <div className='text-left'>
               <input
@@ -65,7 +76,7 @@ export default function Register() {
                 {...register("name", { required: true, minLength: 3 })}
               />
 
-              <span className=' mt-1 inline-block text-red-500'>
+              <span className='inline-block mt-1 text-red-500 '>
                 {errors.name?.type === "required"
                   ? "Name is required"
                   : errors.name?.type === "minLength"
@@ -83,7 +94,7 @@ export default function Register() {
                   pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                 })}
               />
-              <span className=' mt-1 inline-block text-red-500'>
+              <span className='inline-block mt-1 text-red-500 '>
                 {errors.name?.type === "required"
                   ? "Email is required"
                   : errors.name?.type === "pattern"
@@ -98,7 +109,7 @@ export default function Register() {
                 className='input'
                 {...register("password", { required: true, minLength: 6 })}
               />
-              <span className=' mt-1 inline-block text-red-500'>
+              <span className='inline-block mt-1 text-red-500 '>
                 {errors.password?.type === "required"
                   ? "Password is required"
                   : errors.password?.type === "minLength"
@@ -116,7 +127,7 @@ export default function Register() {
                   minLength: 6,
                 })}
               />
-              <span className=' mt-1 inline-block text-red-500'>
+              <span className='inline-block mt-1 text-red-500 '>
                 {errors.confirmPassword?.type === "required"
                   ? "ConfirmPassword is required"
                   : errors.password?.type === "minLength"
@@ -130,7 +141,7 @@ export default function Register() {
             <div className='text-gray-600 '>
               <span>Already have an accont? </span>
               <Link href={`/login?/redirect=${redirect || "/"}`}>
-                <a className='font-pacifico text-amber-300 tracking-widest hover:text-amber-400 transition-colors'>
+                <a className='tracking-widest transition-colors font-pacifico text-amber-300 hover:text-amber-400'>
                   login
                 </a>
               </Link>

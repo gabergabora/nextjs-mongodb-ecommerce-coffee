@@ -1,9 +1,10 @@
-import {BlogCard} from "components";
+import { BlogCard } from "components";
 
 export default function BlogList() {
-  return <section>
-      <div className="section-container">
-      <h2 className='mb-8 text-center'>
+  return (
+    <section>
+      <div className='section-container'>
+        <h2 className='mb-8 text-center'>
           Our
           <span className='text-amber-700'> Blogs</span>
         </h2>
@@ -13,5 +14,6 @@ export default function BlogList() {
           <BlogCard />
         </div>
       </div>
-  </section>;
+    </section>
+  );
 }

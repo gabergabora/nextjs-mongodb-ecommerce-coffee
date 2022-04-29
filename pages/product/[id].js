@@ -19,13 +19,13 @@ export default function ProductPage({ product }) {
     <Layout title={product.name} description={product.description}>
       <section>
         <div className='section-container'>
-          <div className='grid grid-cols-1 md:grid-cols-2 items-center gap-5 justify-center'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 items-center gap-5 justify-center'>
             <div className='relative w-60  h-80 mx-auto'>
               <Image src={product.image} layout='fill' />
             </div>
-            <div>
+            <div className="space-y-8">
               <h1 className='text-3xl text-amber-500 mb-2'>{product.name}</h1>
-              <div className='space-y-1'>
+              <div className='space-y-2'>
                 <p>
                   <span className='text-amber-400 font-bold'>Category: </span>
                   {product.category}
@@ -46,7 +46,7 @@ export default function ProductPage({ product }) {
                 </p>
               </div>
             </div>
-            <div className='space-y-1'>
+            <div className='space-y-3 '>
               <p>
                 <span className='text-amber-400 font-bold'>price: </span> $
                 {product.price}

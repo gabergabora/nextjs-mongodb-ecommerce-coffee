@@ -31,7 +31,7 @@ export default function Navbar() {
   const logoutHander = () => {
     dispatch(userLogout());
     dispatch(clearCart());
-    setIsMenuOpen(false)
+    setIsMenuOpen(false);
     router.push("/");
   };
 
@@ -45,7 +45,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href='/'>
+            <Link href='/shop'>
               <a className='nav-link'>Shop</a>
             </Link>
           </li>
@@ -62,7 +62,7 @@ export default function Navbar() {
                 <a className='nav-link'>
                   Cart
                   {cartItems.length > 0 && (
-                    <span className='absolute text-amber-400  -top-3 -right-3'>
+                    <span className='absolute text-amber-400 -top-3 -right-3'>
                       {cartItems.length}
                     </span>
                   )}
@@ -73,11 +73,11 @@ export default function Navbar() {
           <li className='relative'>
             {userInfo ? (
               <button
-                className='nav-link  text-amber-700'
+                className='nav-link text-amber-700'
                 type='button'
                 onClick={menuHandler}
               >
-                <FaUserCheck className='h-6 w-6' />
+                <FaUserCheck className='w-6 h-6' />
               </button>
             ) : (
               <Link href='/login'>

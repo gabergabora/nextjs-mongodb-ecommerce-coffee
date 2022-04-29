@@ -19,6 +19,9 @@
   h3 {
     @apply text-3xl font-bold tracking-wider text-gray-100;
   }
+  h4 {
+    @apply text-xl font-bold tracking-wider text-gray-100;
+  }
   p {
     @apply text-gray-300 text-lg;
   }
@@ -29,7 +32,7 @@
 
 @layer components {
   .nav-link {
-    @apply text-gray-300 text-xl hover:text-amber-700 font-pacifico transition-all py-2 px-1;
+    @apply px-1 py-2 text-xl text-gray-300 transition-all hover:text-amber-700 font-pacifico;
   }
   .link-btn {
     @apply text-white bg-amber-600 py-1 px-4 cursor-pointer text-lg font-pacifico font-extralight tracking-[0.14rem] inline-block hover:bg-black/70 border-2 border-amber-600 transition-colors rounded;
@@ -41,7 +44,7 @@
     @apply text-gray-300 h-9 w-9 p-1.5 border border-gray-200 hover:bg-amber-700 cursor-pointer hover:border-amber-700 transition-all;
   }
   .input {
-    @apply w-full block bg-black/70 p-2 rounded focus:outline-amber-600 outline-none text-amber-500 text-lg tracking-wider;
+    @apply w-full block bg-black/70 p-2 rounded focus:outline-amber-600 outline-none text-amber-500 text-lg tracking-wider capitalize;
   }
   .user-item {
     @apply font-pacifico px-4 py-2 text-center hover:text-gray-400 transition-colors;

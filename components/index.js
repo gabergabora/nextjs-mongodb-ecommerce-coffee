@@ -7,3 +7,5 @@ export { default as BlogList } from "./BlogList";
 export { default as BlogCard } from "./BlogCard";
 export { default as Footer } from "./Footer";
 export { default as Layout } from "./Layout";
+export { default as CheckoutWizard } from "./CheckoutWizard";
+export { default as CartTable } from "./CartTable";
