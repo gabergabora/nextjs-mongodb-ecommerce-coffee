@@ -16,48 +16,50 @@ export default function ProductPage({ product }) {
     dispatch(addToCart({ ...product, quantity: 1 }));
   };
   return (
-    <Layout title={product.name} description={product.description}>
+    <Layout title={product.name}>
       <section>
         <div className='section-container'>
-          <div className='grid grid-cols-1 lg:grid-cols-2 items-center gap-5 justify-center'>
-            <div className='relative w-60  h-80 mx-auto'>
+          <div className='grid items-center justify-center grid-cols-1 gap-5 lg:grid-cols-2'>
+            <div className='relative mx-auto w-60 h-80'>
               <Image src={product.image} layout='fill' />
             </div>
-            <div className="space-y-8">
-              <h1 className='text-3xl text-amber-500 mb-2'>{product.name}</h1>
+            <div className='space-y-8'>
+              <h1 className='mb-2 text-3xl text-amber-500'>{product.name}</h1>
               <div className='space-y-2'>
                 <p>
-                  <span className='text-amber-400 font-bold'>Category: </span>
+                  <span className='font-bold text-amber-400'>Category: </span>
                   {product.category}
                 </p>
                 <p>
-                  <span className='text-amber-400 font-bold'>Brand: </span>
+                  <span className='font-bold text-amber-400'>Brand: </span>
                   {product.brand}
                 </p>
                 <p>
-                  <span className='text-amber-400 font-bold'>Rating: </span>
+                  <span className='font-bold text-amber-400'>Rating: </span>
                   {product.rating}
                 </p>
-                <p>
-                  <span className='text-amber-400 font-bold'>
+                <div>
+                  <span className='font-bold text-amber-400'>
                     Description:{" "}
                   </span>
-                  {product.description}
-                </p>
+                  <p
+                    dangerouslySetInnerHTML={{ __html: product.description }}
+                  ></p>
+                </div>
               </div>
             </div>
             <div className='space-y-3 '>
               <p>
-                <span className='text-amber-400 font-bold'>price: </span> $
+                <span className='font-bold text-amber-400'>price: </span> $
                 {product.price}
               </p>
               <p>
-                <span className='text-amber-400 font-bold'>status: </span>
+                <span className='font-bold text-amber-400'>status: </span>
                 {product.countInStock > 0 ? "In stock" : "Unavailable"}
               </p>
               <button
                 type='button'
-                className='link-btn max-w-md w-1/2'
+                className='w-1/2 max-w-md link-btn'
                 onClick={() => addToCartHandler(product)}
               >
                 Add to Cart
