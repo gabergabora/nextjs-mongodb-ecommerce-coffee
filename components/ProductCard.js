@@ -33,7 +33,7 @@ export default function ProductCard({ product }) {
           </a>
         </Link>
       </div>
-      <div className='relative w-1/3 transition h-60 group-hover:scale-105'>
+      <div className='relative w-1/3 transition h-44 lg:h-64 group-hover:scale-105'>
         <Image src={product.image} layout='fill' />
       </div>
       <div className='space-y-2 text-center'>
