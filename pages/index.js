@@ -1,4 +1,6 @@
-import axios from "axios";
+//? database
+import db from "../lib/db";
+import Product from "models/Product";
 
 //? components
 import { AboutUs, Banner, BlogList, Layout, ProductList } from "components";
@@ -15,8 +17,11 @@ export default function Home({ products }) {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get(process.env.BASE_URL + "/api/products");
+  await db.connect();
+  const products = await Product.find({}).lean();
+  await db.disconnect();
+
   return {
-    props: { products: res.data },
+    props: { products: products.map(db.convertDocToObj) },
   };
 }

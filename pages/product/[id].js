@@ -1,5 +1,8 @@
 import Image from "next/image";
-import axios from "axios";
+
+//? database
+import db from "lib/db";
+import Product from "models/Product";
 
 //? components
 import { Layout } from "components";
@@ -73,8 +76,11 @@ export default function ProductPage({ product }) {
 }
 
 export async function getServerSideProps({ params: { id } }) {
-  const res = await axios.get(process.env.BASE_URL + `/api/products/${id}`);
+  await db.connect();
+  const product = await Product.findById({ _id: id }).lean();
+  await db.disconnect();
+
   return {
-    props: { product: res.data },
+    props: { product: db.convertDocToObj(product) },
   };
 }
