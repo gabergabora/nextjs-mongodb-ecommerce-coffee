@@ -1,4 +1,6 @@
-import axios from "axios";
+//? database
+import db from "lib/db";
+import Product from "models/Product";
 
 //? components
 import { Layout, ProductCard } from "components";
@@ -19,8 +21,11 @@ export default function Shop({ products }) {
   );
 }
 export async function getServerSideProps() {
-  const res = await axios.get(process.env.BASE_URL + "/api/products");
+  await db.connect();
+  const products = await Product.find({}).lean();
+  await db.disconnect();
+
   return {
-    props: { products: res.data },
+    props: { products: products.map(db.convertDocToObj) },
   };
 }
