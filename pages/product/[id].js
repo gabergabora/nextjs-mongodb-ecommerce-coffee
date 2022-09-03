@@ -15,7 +15,6 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "store/slices/cartSlice";
 import { wrapper } from "store/store";
 
-
 export default function ProductPage({ productData: product }) {
   const dispatch = useDispatch();
   // ? handlers
@@ -89,18 +88,20 @@ export default function ProductPage({ productData: product }) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async ({ params: { id } }) => {
-
     // access to store
     const { userInfo } = store.getState().user;
 
-    const decoded = await jwt.verify(userInfo.token, process.env.JWT_SECRET);
-
     await db.connect();
-    const user = await User.findOne({ _id: decoded._id });
+
+    let inFavouriteList;
+    if (userInfo?.token) {
+      const decoded = await jwt.verify(userInfo?.token, process.env.JWT_SECRET);
+      const user = await User.findOne({ _id: decoded._id });
+      inFavouriteList = user.favouriteList.find((item) => item === id);
+    }
+
     const product = await Product.findById({ _id: id }).lean();
     await db.disconnect();
-
-    let inFavouriteList = user.favouriteList.find((item) => item === id);
 
     const productData = {
       ...db.convertDocToObj(product),

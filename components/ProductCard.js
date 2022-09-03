@@ -26,7 +26,7 @@ export default function ProductCard({ product }) {
     dispatch(addToCart({ ...product, quantity: 1 }));
   };
 
-  const toggleHandler = async (id) => {
+  const faviouriteHandler = async (id) => {
     dispatch(addToFavouriteList(id));
     await axios.post(
       "/api/users/favourite",
@@ -43,11 +43,16 @@ export default function ProductCard({ product }) {
         <button onClick={() => addToCartHandler(product)}>
           <MdOutlineShoppingCart className='icon-btn' />
         </button>
-        <button onClick={() => toggleHandler(product._id)}>
+        <button
+          onClick={() => faviouriteHandler(product._id)}
+          disabled={!userInfo?.token}
+        >
           {favouriteList.find((item) => item === product._id) ? (
             <MdFavorite className='icon-btn text-amber-500' />
           ) : (
-            <MdFavorite className='icon-btn' />
+            <MdFavorite
+              className={`icon-btn ${!userInfo?.token && "cursor-auto"}`}
+            />
           )}
         </button>
         <Link href={`/product/${product._id}`} passHref>
