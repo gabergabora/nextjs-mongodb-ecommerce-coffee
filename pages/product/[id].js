@@ -1,19 +1,23 @@
 import Image from "next/image";
+import jwt from "jsonwebtoken";
 
 //? database
 import db from "lib/db";
 import Product from "models/Product";
+import User from "models/User";
 
 //? components
 import { Layout } from "components";
+import { MdFavorite } from "react-icons/md";
 
 //? store
 import { useDispatch } from "react-redux";
 import { addToCart } from "store/slices/cartSlice";
+import { wrapper } from "store/store";
 
-export default function ProductPage({ product }) {
+
+export default function ProductPage({ productData: product }) {
   const dispatch = useDispatch();
-
   // ? handlers
   const addToCartHandler = (product) => {
     dispatch(addToCart({ ...product, quantity: 1 }));
@@ -23,6 +27,14 @@ export default function ProductPage({ product }) {
       <section>
         <div className='section-container'>
           <div className='grid items-center justify-center grid-cols-1 gap-5 lg:grid-cols-2'>
+            {product.isFavourite && (
+              <div className='flex items-center gap-3'>
+                <MdFavorite className='h-12 w-12 text-amber-500' />
+                <span className='text-amber-300 text-base'>
+                  you have this product in faviourite list
+                </span>
+              </div>
+            )}
             <div className='relative mx-auto w-60 h-80'>
               <Image src={product.image} layout='fill' />
             </div>
@@ -75,12 +87,30 @@ export default function ProductPage({ product }) {
   );
 }
 
-export async function getServerSideProps({ params: { id } }) {
-  await db.connect();
-  const product = await Product.findById({ _id: id }).lean();
-  await db.disconnect();
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async ({ params: { id } }) => {
 
-  return {
-    props: { product: db.convertDocToObj(product) },
-  };
-}
+    // access to store
+    const { userInfo } = store.getState().user;
+
+    const decoded = await jwt.verify(userInfo.token, process.env.JWT_SECRET);
+
+    await db.connect();
+    const user = await User.findOne({ _id: decoded._id });
+    const product = await Product.findById({ _id: id }).lean();
+    await db.disconnect();
+
+    let inFavouriteList = user.favouriteList.find((item) => item === id);
+
+    const productData = {
+      ...db.convertDocToObj(product),
+      isFavourite: inFavouriteList ? true : false,
+    };
+
+    return {
+      props: {
+        productData,
+      },
+    };
+  }
+);

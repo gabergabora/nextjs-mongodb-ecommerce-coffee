@@ -2,8 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 //? store
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "store/slices/cartSlice";
+
+import { addToFavouriteList } from "store/slices/userSlice";
+
+import axios from "axios";
 
 //? icons
 import {
@@ -15,9 +19,22 @@ import {
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
 
+  const { userInfo, favouriteList } = useSelector((state) => state.user);
+
   // ? handlers
   const addToCartHandler = (product) => {
     dispatch(addToCart({ ...product, quantity: 1 }));
+  };
+
+  const toggleHandler = async (id) => {
+    dispatch(addToFavouriteList(id));
+    await axios.post(
+      "/api/users/favourite",
+      { id },
+      {
+        headers: { authorization: userInfo.token },
+      }
+    );
   };
 
   return (
@@ -26,7 +43,13 @@ export default function ProductCard({ product }) {
         <button onClick={() => addToCartHandler(product)}>
           <MdOutlineShoppingCart className='icon-btn' />
         </button>
-        <MdFavorite className='icon-btn' />
+        <button onClick={() => toggleHandler(product._id)}>
+          {favouriteList.find((item) => item === product._id) ? (
+            <MdFavorite className='icon-btn text-amber-500' />
+          ) : (
+            <MdFavorite className='icon-btn' />
+          )}
+        </button>
         <Link href={`/product/${product._id}`} passHref>
           <a>
             <MdRemoveRedEye className='icon-btn' />

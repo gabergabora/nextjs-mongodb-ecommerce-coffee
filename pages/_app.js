@@ -4,13 +4,12 @@ import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 
 //? store
-import { Provider } from "react-redux";
-import { store } from "store/store";
+import { wrapper } from "store/store";
 
 //? styles
 import "/styles/global.css";
 
-export default function MyApp({ Component, pageProps }) {
+const MyApp = function ({ Component, pageProps }) {
   const [showChild, setShowChild] = useState(false);
 
   useEffect(() => {
@@ -22,14 +21,14 @@ export default function MyApp({ Component, pageProps }) {
   }
 
   return (
-    <Provider store={store}>
-      <>
-        <Component {...pageProps} />
-        <Toaster
-          position='bottom-right'
-          toastOptions={{ style: { fontSize: "1.2rem" } }}
-        />
-      </>
-    </Provider>
+    <>
+      <Component {...pageProps} />
+      <Toaster
+        position='bottom-right'
+        toastOptions={{ style: { fontSize: "1.2rem" } }}
+      />
+    </>
   );
-}
+};
+
+export default wrapper.withRedux(MyApp);
