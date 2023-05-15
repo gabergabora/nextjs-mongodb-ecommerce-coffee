@@ -6,7 +6,7 @@ const userSchema = new mongosse.Schema({
   password: { type: String, required: true },
   isAdmin: { type: Boolean, required: true, default: false },
   favouriteList: { type: Array, required: false },
-});
+});                
 
 const User = mongosse.models.User || mongosse.model("User", userSchema);
 
